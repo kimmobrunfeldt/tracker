@@ -5,12 +5,11 @@ Makes a request to a server and sends output of certain commands to it.
 from Crypto.Cipher import AES
 import base64
 import hashlib
-import json
 import requests
 import subprocess
 
 
-request_address = 'http://kimmobrunfeldt.com/6ced86ba-63b8-11e2-a12b-705681c24ac3.php'
+request_address = 'http://kimmobrunfeldt.com/t/6ced86ba-63b8-11e2-a12b-705681c24ac3.php'
 
 # Cyrpt key for sended text
 crypt_key = 'b794aefd-63bb-11e2-9592-705681c24ac3'
@@ -41,11 +40,6 @@ def run_command(command):
 def dec2hex(n):
     """Return the hexadecimal string representation of integer n"""
     return "%X" % n
-
-
-def hex2dec(s):
-    """Return the integer value of a hexadecimal string s"""
-    return int(s, 16)
 
 
 def hash_key(key):
@@ -86,37 +80,9 @@ def encrypt_text(text, key):
     key = hash_key(key)
 
     mode = AES.MODE_CBC
-    encryptor = AES.new(key, mode)
+    encryptor = AES.new(key, mode, chr(0) * 16)
 
     return encryptor.encrypt(text)  # Encrypt text.
-
-
-def decrypt_text(ciphertext, key):
-    """Decrypts given ciphertext with given key. Ciphertext is excepted to be
-    encrypted with AES.MODE_CBC
-    Plain text is always padded.
-    If unicode object was given to encrypt function, the returned plaintext
-    is encoded with utf-8.
-
-    Key must be 8, 16 or 32 bits,
-    so sha256 hash is made from given key.
-    """
-    # Get sha256 digest from key.
-    key = hash_key(key)
-
-    # Use AES and Cipher-block chaining mode
-    mode = AES.MODE_CBC
-    decryptor = AES.new(key, mode)
-
-    plain = decryptor.decrypt(ciphertext)  # Get padded plaintext
-
-    try:
-        firstpad = -(hex2dec(plain[-1]) + 1)  # Get position of first padding
-
-    except ValueError:  # Last char was not a number
-        raise ValueError("Probably wrong key!")
-
-    return plain[:firstpad]  # Return plain text in unicode
 
 
 def main():
@@ -130,8 +96,9 @@ def main():
     encrypted_message = encrypt_text(message, crypt_key)
 
     base66_message = base64.b64encode(encrypted_message)
-    data = json.dumps({'message': base66_message})
-    requests.post(request_address, data=data)
+    data = {'message': base66_message}
+    r = requests.post(request_address, data=data)
+    print r.text
 
 
 if __name__ == '__main__':
