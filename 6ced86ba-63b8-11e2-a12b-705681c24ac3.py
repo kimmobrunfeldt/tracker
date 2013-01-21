@@ -97,8 +97,7 @@ def main():
 
     base66_message = base64.b64encode(encrypted_message)
     data = {'message': base66_message}
-    r = requests.post(request_address, data=data)
-    print r.text
+    requests.post(request_address, data=data)
 
 
 if __name__ == '__main__':
