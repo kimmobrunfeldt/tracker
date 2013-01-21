@@ -15,7 +15,7 @@ request_address = 'http://kimmobrunfeldt.com/t/6ced86ba-63b8-11e2-a12b-705681c24
 crypt_key = 'b794aefd-63bb-11e2-9592-705681c24ac3'
 
 # Each command is subprocess.Popen's list format.
-commands = [['ifconfig']]
+commands = [['/sbin/ifconfig']]
 
 
 def run_command(command):
