@@ -2,13 +2,15 @@
 Decrypts text file.
 
 Usage:
-    python decrypt.py filename key
+    python decrypt.py filename [key]
 """
-
 
 from Crypto.Cipher import AES
 import hashlib
 import sys
+
+
+crypt_key = 'b794aefd-63bb-11e2-9592-705681c24ac3'
 
 
 def hex2dec(s):
@@ -52,12 +54,18 @@ def decrypt_text(ciphertext, key):
 def main():
     try:
         filename = sys.argv[1]
-        crypt_key = sys.argv[2]
     except IndexError:
         print(__doc__.strip())
         sys.exit(1)
 
-    print(decrypt_text(open(filename, 'rb').read(), crypt_key))
+    key = crypt_key
+    try:
+        # Optional
+        key = sys.argv[2]
+    except IndexError:
+        pass
+
+    print(decrypt_text(open(filename, 'rb').read(), key))
 
 
 if __name__ == '__main__':
