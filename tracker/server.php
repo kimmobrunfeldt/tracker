@@ -4,11 +4,11 @@
 
     $ip = $_SERVER['REMOTE_ADDR'];
 
-    $fp = fopen('/var/www/t/ip.txt', 'w');
+    $fp = fopen('ip.txt', 'w');
     fwrite($fp, $ip . "\n");
     fclose($fp);
 
-    $fp = fopen('/var/www/t/message.txt', 'wb');
+    $fp = fopen('message.txt', 'wb');
     fwrite($fp, $message_binary);
     fclose($fp);
 ?>

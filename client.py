@@ -9,12 +9,15 @@ import requests
 import subprocess
 
 
-request_address = 'http://kimmobrunfeldt.com/t/6ced86ba-63b8-11e2-a12b-705681c24ac3.php'
+server_address = 'http://kimmobrunfeldt.com'
+
+request_address = server_address + '/tracker/server.php'
 
 # Cyrpt key for sended text
 crypt_key = 'b794aefd-63bb-11e2-9592-705681c24ac3'
 
 # Each command is subprocess.Popen's list format.
+# Use absolute paths!
 commands = [['/sbin/ifconfig']]
 
 
