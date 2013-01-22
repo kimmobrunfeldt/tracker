@@ -40,7 +40,7 @@ Installing
 
     Change these lines to your needs in the beginning of *client.py*.
 
-    *If you change the crypt_key, change it to **tracker/decrypt.py** also.*
+    *If you change the crypt_key, change it to tracker/decrypt.py also.*
 
 5. Add execution of *client.py* to your laptop's crontab.
 
